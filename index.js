@@ -16,6 +16,7 @@ app.use(express.json());
 // the routes have been manages here
 app.use(require('./router/auth'));
 app.use(require('./router/product.js'));
+app.use(require('./router/cart.js'));
 
 // example to make a route on this file
 // app.get('/' ,  (req, res)=>{

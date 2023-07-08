@@ -61,7 +61,7 @@ const Product = require('../models/productSchema');
 
 
 
-router.post('/products', authenticateToken , async (req, res) => {
+router.post('/products/add', authenticateToken, async (req, res) => {
     try {
         // Verify if the user is an admin
         if (req.user.role !== 'admin') {
@@ -82,6 +82,43 @@ router.post('/products', authenticateToken , async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error' });
+    }
+});
+router.delete('/products/delete', authenticateToken, async (req, res) => {
+    try {
+        // Verify if the user is an admin
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        const { productname } = req.body;
+
+        // delete a new product
+        const product = await Product.findOneAndDelete({ name: productname });
+
+        res.status(201).json({ message: 'Product deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+router.put('/products/update/:productname', authenticateToken, async (req, res) => {
+    try {
+        const productname = req.params.productname;
+        const regex = new RegExp(productname, 'i');
+        const {name, price, description, quantity, specification } = req.body;
+        const updatedProduct = await Product.findOneAndUpdate({name : productname}, {
+            name, 
+            price, 
+            description, 
+            quantity, 
+            specification
+        }, { new: true });
+        res.json(updatedProduct);
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).json({ error: 'Server error' , errorMessge : error });
     }
 });
 
