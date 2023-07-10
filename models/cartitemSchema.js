@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const cartItemSchema = new mongoose.Schema({
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
@@ -12,14 +12,6 @@ const cartItemSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 required: true,
             },
-            name: {
-                type: String,
-                required: true,
-            },
-            price: {
-                type: Number,
-                required: true,
-            },
             quantity: {
                 type: Number,
                 required: true,
@@ -28,7 +20,7 @@ const cartItemSchema = new mongoose.Schema({
     ],
     createdAt:{
         type : Date,
-        default:Date.now,
+        // default:Date.now,
     },
     updatedAt:{
         type:Date,
