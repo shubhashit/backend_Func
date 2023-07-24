@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Cart = require('../models/cartitemSchema')
 const authenticateToken = require('../middleware/authenticateToken')
-const Product = require('../models/productSchema');
+const Product = require('../models/productSchema'); 
 
 
 router.post('/cart/add', authenticateToken, async (req, res) => {
